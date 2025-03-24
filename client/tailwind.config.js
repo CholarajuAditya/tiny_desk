@@ -1,0 +1,1 @@
+//this file is required for tailwind intellisense to work
