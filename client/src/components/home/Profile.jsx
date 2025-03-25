@@ -21,40 +21,40 @@ const Profile = () => {
     },
   )
 
-  useEffect(() => {
-    const getProfile = async() => {
-      setLoading(true)
-      try {
-        const token = localStorage.getItem("token")
-        const response = await axios.get("/api/profile", {
-          headers:{
-            Authorization: `Bearer ${token}`
-          }
-        })
-        if(response.status === 200){
-          const { name, gstin, phone, address}= response.data
-          setProfileData({
-            name,
-            gstin,
-            phone,
-          })
-          setAddressData({
-            street: address.street,
-            area: address.area, 
-            city: address.city,
-            country: address.country,
-            pincode: address.pincode
-          })
-          
-          setProfileCreated(true)
+  const getProfile = async() => {
+    setLoading(true)
+    try {
+      const token = localStorage.getItem("token")
+      const response = await axios.get("/api/profile", {
+        headers:{
+          Authorization: `Bearer ${token}`
         }
-      } catch (error) {
-        window.alert(error.response.data.message)
-      } finally{
-        setLoading(false)
+      })
+      if(response.status === 200){
+        const { name, gstin, phone, address}= response.data
+        setProfileData({
+          name,
+          gstin,
+          phone,
+        })
+        setAddressData({
+          street: address.street,
+          area: address.area, 
+          city: address.city,
+          country: address.country,
+          pincode: address.pincode
+        })
+        
+        setProfileCreated(true)
       }
+    } catch (error) {
+      window.alert(error.response.data.message)
+    } finally{
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     getProfile()
   }, [])
 
@@ -101,7 +101,7 @@ const Profile = () => {
   }
 
   return (
-    <> 
+    <div className="flex justify-center items-center h-screen"> 
       {loading && <Loading/>}
       {!loading && !profileCreated && (
         <form onSubmit={createProfile}>
@@ -121,16 +121,16 @@ const Profile = () => {
         </form>
       )}
       {!loading && profileCreated && (
-        <div >
+        <div>
           { Object.entries(profileData).map( (field, index) => (
-            <div className="text-black" key={index}>{field[0]} : {field[1]}</div>
+            <div className="text-black text-xl my-5" key={index}>{field[0] === "gstin" ? field[0].toUpperCase() : field[0].charAt(0).toUpperCase() + field[0].slice(1)} : {field[1]}</div>
           ))}   
           { Object.entries(addressData).map( (field, index) => (
-            <div className="text-black" key={index}>{field[0]} : {field[1]}</div>
+            <div className="text-black text-xl my-5" key={index}>{field[0].charAt(0).toUpperCase() + field[0].slice(1)} : {field[1]}</div>
           ))}               
         </div>
       )}
-    </>
+    </div>
   )
 }
 

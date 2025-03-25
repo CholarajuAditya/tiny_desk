@@ -1,37 +1,37 @@
 import { useEffect, useState } from 'react'
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import axios from "axios"
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Dashboard = () => {
     const [monthlyReport, setMonthlyReport] = useState({})
 
-    useEffect(() => {
-        const getMonthlyReport = async() => {
-            try {
-                const token = localStorage.getItem("token")
-                const response = await axios.get("/api/report", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                if(response.status === 200){
-                    setMonthlyReport(response.data)
-                    console.log(response.data);
-                    
+    const getMonthlyReport = async() => {
+        try {
+            const token = localStorage.getItem("token")
+            const response = await axios.get("/api/report", {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            } catch (error) {
-                window.alert(error.response.data.message)
+            })
+            if(response.status === 200){
+                setMonthlyReport(response.data)
+                console.log(response.data);
+                
             }
+        } catch (error) {
+            window.alert(error.response.data.message)
         }
+    }
 
+    useEffect(() => {
         getMonthlyReport()
     }, [])
     
     return (
-        <>    
-            <div>Dashboard</div>
-            <NavLink className="mx-20" to="/user/profile">profile</NavLink>   
-            {
+        <div className="flex flex-col justify-center items-center relative w-[100%] h-screen">    
+            <NavLink className="text-4xl absolute top-8 right-8 hover:scale-110 duration-300" to="/user/profile"><IoPersonCircleOutline /></NavLink>   
+            {   
                 monthlyReport && Object.keys(monthlyReport).length > 0 ? (
                     Object.keys(monthlyReport).map((key, index) => (
                         <p key={index}>{key}: {monthlyReport[key]}</p>
@@ -40,7 +40,7 @@ const Dashboard = () => {
                     <p>Loading report...</p>
                 )
             }
-        </>
+        </div>
     )
 }
 
