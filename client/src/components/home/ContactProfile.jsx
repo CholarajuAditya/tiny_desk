@@ -121,39 +121,94 @@ const ContactProfile = ({url, entityName, btnAction}) => {
   if (!contact) return <p>{entityName} not found</p>;
 
   return (
-    <>
-    {!update && 
-      <>
-         <div>
-            <h1 className="text-2xl font-bold">{contact.name}</h1>
-            <p>GSTIN: {contact.gstin}</p>
-            <p>Phone: {contact.phone}</p>
-            <p>Email: {contact.email}</p>
-            <h2 className="text-xl mt-4">Address:</h2>
-            <p>{contact.address?.street}, {contact.address?.area}</p>
-            <p>{contact.address?.city}, {contact.address?.country} - {contact.address?.pincode}</p>
+    <div className="min-h-screen w-full flex justify-center ">
+    {!update && (
+      <div className="w-[100%] h-[100%] mx-auto px-30 py-15  rounded-lg">
+        
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">{contact.name}</h1>
+          <p className="text-gray-600"><span className="font-semibold">GSTIN:</span> {contact.gstin}</p>
+          <p className="text-gray-600"><span className="font-semibold">Phone:</span> {contact.phone}</p>
+          <p className="text-gray-600 truncate w-full"><span className="font-semibold">Email:</span> {contact.email}</p>
+  
+          
+          <h2 className="text-xl font-semibold mt-4 text-gray-900">Address:</h2>
+          <p className="text-gray-600">{contact.address?.street}, {contact.address?.area}</p>
+          <p className="text-gray-600">{contact.address?.city}, {contact.address?.country} - {contact.address?.pincode}</p>
         </div>
-        <button className="cursor-pointer" onClick={() => setUpdate(!update)}>update</button>
-        <button className="cursor-pointer" onClick={() => navigate(`/user/${btnAction}`, {state: {contact}})}>create {btnAction}</button>
-        <button className="cursor-pointer" onClick={deleteContact}>delete</button>
-     </>
-    }
-   
-    {
-      update &&
-      <form onSubmit={(e) => upDateContact(e)}>
-          {Object.keys(newDetails).map( (key, index) => (
-            <input key={index} type="text" name={key} value={newDetails[key]} onChange={handleDetails}/>
-          ))}
-          <h4>address</h4>
-          {Object.keys(newAddress).map( (key, index) => (
-            <input key={index} type="text" name={key} value={newAddress[key]} onChange={handleAddress}/>
-          ))}
-          <br />
-          <button>Update</button>
-      </form>
-    }
-    </>
+  
+        
+        <div className="flex gap-4 mt-4">
+          <button 
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            onClick={() => setUpdate(!update)}
+          >
+            Update
+          </button>
+          <button 
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+            onClick={() => navigate(`/user/${btnAction}`, { state: { contact } })}
+          >
+            Create {btnAction}
+          </button>
+          <button 
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+            onClick={deleteContact}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    )}
+  
+    
+    {update && (
+      <div className="flex flex-col justify-center items-center max-w-4xl mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Update Contact</h2>
+        <form onSubmit={(e) => upDateContact(e)} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            {Object.keys(newDetails).map((key, index) => (
+              <label key={index} className="block">
+                <span className="text-sm font-medium text-gray-700">{key}:</span>
+                <input 
+                  type="text" 
+                  name={key} 
+                  value={newDetails[key]} 
+                  onChange={handleDetails} 
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
+                />
+              </label>
+            ))}
+          </div>
+  
+          
+          <h4 className="text-lg font-semibold text-gray-900 mt-4">Address</h4>
+          <div className="grid grid-cols-2 gap-4">
+            {Object.keys(newAddress).map((key, index) => (
+              <label key={index} className="block">
+                <span className="text-sm font-medium text-gray-700">{key}:</span>
+                <input 
+                  type="text" 
+                  name={key} 
+                  value={newAddress[key]} 
+                  onChange={handleAddress} 
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
+                />
+              </label>
+            ))}
+          </div>
+  
+          <button 
+            type="submit"
+            className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-200 mt-4"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    )}
+  </div>
+  
   );
 };
 

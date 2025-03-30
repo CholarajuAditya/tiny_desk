@@ -146,63 +146,116 @@ function Invoice() {
     };
 
     return (
-        <form method="post" onSubmit={downloadInvoice} className="flex flex-col bg-white shadow-2xl rounded-lg p-6 px-15 w-[60%] mx-auto mt-10">
-            <div className="space-y-6">
-                <div>
-                    <h5 className="text-lg font-semibold">Bill To:</h5>
-                    <div className="grid grid-cols-2 gap-4 mt-2">
-                        {Object.entries(invoiceData.billTo).map(([key, value]) => (
-                            <input type="text" key={key} name={key} onChange={(e) => handleChange(e, "billTo", key)} value={value} placeholder={key} className="border border-gray-300 rounded-lg p-2 mb-2 w-full" />
-                        ))}
-                    </div>
-                </div>
-                <div>
-                    <h5 className="text-lg font-semibold">Delivery Address:</h5>
-                    <input type="text" name="address" onChange={(e) => handleChange(e, "deliveryTo", "address")} value={invoiceData.deliveryTo.address} placeholder="Delivery Address" className="border border-gray-300 rounded-lg p-2 w-full mt-2" />
-                </div>
+        <form 
+          method="post" 
+          onSubmit={downloadInvoice} 
+          className="bg-white shadow-2xl rounded-lg p-6 w-full max-w-4xl mx-auto"
+        >
+          <div className="space-y-6">
+            <div>
+              <h5 className="text-lg font-semibold">Bill To:</h5>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                {Object.entries(invoiceData.billTo).map(([key, value]) => (
+                  <input 
+                    type="text" 
+                    key={key} 
+                    name={key} 
+                    onChange={(e) => handleChange(e, "billTo", key)} 
+                    value={value} 
+                    placeholder={key} 
+                    className="border border-gray-300 rounded-lg p-2 w-full"
+                  />
+                ))}
+              </div>
             </div>
-            <div className="product-details mt-6">
-                <table className="w-full border-collapse border border-gray-300 rounded-lg">
-                    <thead>
-                        <tr className="bg-gray-200 text-gray-700 text-left">
-                            <th className="p-2 border border-gray-300">Item No.</th>
-                            <th className="p-2 border border-gray-300">Description</th>
-                            <th className="p-2 border border-gray-300">Quantity</th>
-                            <th className="p-2 border border-gray-300">Rate</th>
-                            <th className="p-2 border border-gray-300">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {invoiceData.products.map((product, index) => (
-                            <tr key={index} className="relative border border-gray-300">
-                                {Object.entries(product).map(([key, value]) => (
-                                    <td key={key} className="p-2 border border-gray-300">
-                                        <input type="text" key={key} value={value} onChange={(e) => handleProducts(e, index, key)} className="px-2 py-1 w-full" />
-                                    </td>
-                                ))}
-                                <button type="button" onClick={() => deleteProduct(index)} className="absolute text-[18px] translate-y-[30%] ml-2 text-red-500 hover:text-red-700 font-bold border-none d">X</button>
-                            </tr>
-                        ))}
-                        <tr className="bg-gray-100">
-                            <td colSpan="4" className="p-2 text-right font-semibold">Sub Total</td>
-                            <td className="text-center p-2">{invoiceData.amount.subTotal}</td>
-                        </tr>
-                        <tr className="bg-gray-100">
-                            <td colSpan="4" className="p-2 text-right font-semibold">Tax</td>
-                            <td className="p-2"><input type="text" value={invoiceData.amount.tax} onChange={(e) => handleChange(e, "amount", "tax")} className="border border-gray-300 rounded-lg p-2 w-full" /></td>
-                        </tr>
-                        <tr className="bg-gray-100">
-                            <td colSpan="4" className="p-2 text-right font-semibold">Total</td>
-                            <td className="text-center p-2">{invoiceData.amount.total}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="button" onClick={addProduct} className="bg-green-500 text-white px-4 py-2 mt-4 rounded-lg w-full hover:bg-green-600">Add Product</button>
+      
+            <div>
+              <h5 className="text-lg font-semibold">Delivery Address:</h5>
+              <input 
+                type="text" 
+                name="address" 
+                onChange={(e) => handleChange(e, "deliveryTo", "address")} 
+                value={invoiceData.deliveryTo.address} 
+                placeholder="Delivery Address" 
+                className="border border-gray-300 rounded-lg p-2 w-full mt-2" 
+              />
             </div>
-            <button className="cursor-pointer bg-black text-white px-6 py-2 mt-6 rounded-lg hover:bg-gray-800 w-full" type="submit">Generate Invoice</button>
+          </div>
+      
+          <div className="product-details mt-6">
+            <div className="overflow-x-auto">
+              <table className="my-10 place-self-center w-[90%] border-collapse border border-gray-300 rounded-lg">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700 text-left text-sm sm:text-base">
+                    <th className="p-2 border border-gray-300">Item No.</th>
+                    <th className="p-2 border border-gray-300">Description</th>
+                    <th className="p-2 border border-gray-300">Quantity</th>
+                    <th className="p-2 border border-gray-300">Rate</th>
+                    <th className="p-2 border border-gray-300">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {invoiceData.products.map((product, index) => (
+                    <tr key={index} className="border border-gray-300 relative">
+                      {Object.entries(product).map(([key, value]) => (
+                        <td key={key} className="p-2 border border-gray-300">
+                          <input 
+                            type="text" 
+                            value={value} 
+                            onChange={(e) => handleProducts(e, index, key)} 
+                            className="px-2 py-1 w-full border border-gray-300 rounded-lg"
+                          />
+                        </td>
+                      ))}
+                        <button 
+                          type="button" 
+                          onClick={() => deleteProduct(index)} 
+                          className="absolute text-red-500 ml-2 hover:text-red-700 font-bold border-none text-xl translate-y-[25%]"
+                        >
+                          X
+                        </button>
+                    </tr>
+                  ))}
+                  <tr className="bg-gray-100">
+                    <td colSpan="4" className="p-2 text-right font-semibold">Sub Total</td>
+                    <td className="text-center p-2">{invoiceData.amount.subTotal}</td>
+                  </tr>
+                  <tr className="bg-gray-100">
+                    <td colSpan="4" className="p-2 text-right font-semibold">Tax</td>
+                    <td className="p-2">
+                      <input 
+                        type="text" 
+                        value={invoiceData.amount.tax} 
+                        onChange={(e) => handleChange(e, "amount", "tax")} 
+                        className="border border-gray-300 rounded-lg p-2 w-full"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-100">
+                    <td colSpan="4" className="p-2 text-right font-semibold">Total</td>
+                    <td className="text-center p-2">{invoiceData.amount.total}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      
+            <button 
+              type="button" 
+              onClick={addProduct} 
+              className="bg-green-500 text-white px-4 py-2 mt-4 rounded-lg w-full hover:bg-green-600"
+            >
+              Add Product
+            </button>
+          </div>
+      
+          <button 
+            className="cursor-pointer bg-black text-white px-6 py-2 mt-6 rounded-lg hover:bg-gray-800 w-full" 
+            type="submit"
+          >
+            Generate Invoice
+          </button>
         </form>
-    
-    );
+      );      
 }
 
 export default Invoice;
