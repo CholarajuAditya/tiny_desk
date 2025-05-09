@@ -30,7 +30,7 @@ const Dashboard = () => {
     
     return (
         <div className="flex flex-col justify-center items-center relative w-[100%] h-screen">    
-            <NavLink className="text-4xl absolute top-8 right-8 hover:scale-110 duration-300" to="/user/profile"><IoPersonCircleOutline /></NavLink>   
+            <NavLink className="text-4xl absolute top-0 right-0 hover:scale-110 duration-300" to="/user/profile"><IoPersonCircleOutline /></NavLink>   
             {   
                 monthlyReport && Object.keys(monthlyReport).length > 0 ? (
                     Object.keys(monthlyReport).map((key, index) => (

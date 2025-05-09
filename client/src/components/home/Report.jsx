@@ -34,38 +34,42 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Financial Report</h2>
-
-            <div className="flex gap-4 mb-4">
-                <select className="p-2 border rounded" value={month} onChange={(e) => setMonth(Number(e.target.value))}>
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-2xl shadow-gray-500 rounded-lg">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Financial Report</h2>
+    
+            <div className="flex flex-wrap gap-4 mb-6">
+                <select className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" 
+                    value={month} onChange={(e) => setMonth(Number(e.target.value))}>
                     {months.map((m, index) => (
                         <option key={m} value={index + 1}>{m}</option>
                     ))}
                 </select>
-
-                <select className="p-2 border rounded" value={year} onChange={(e) => setYear(Number(e.target.value))}>
+    
+                <select className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" 
+                    value={year} onChange={(e) => setYear(Number(e.target.value))}>
                     {years.map((y) => (
                         <option key={y} value={y}>{y}</option>
                     ))}
                 </select>
-
-                <button className="p-2 bg-green-500 text-white rounded" onClick={fetchReport} disabled={loading}>
+    
+                <button className="p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 disabled:opacity-50"
+                    onClick={fetchReport} disabled={loading}>
                     {loading ? "Loading..." : "Get Report"}
                 </button>
             </div>
-
+    
             {reportData && (
-                <div className="p-4 border rounded bg-gray-50">
-                    <p><strong>Month:</strong> {reportData.month}</p>
-                    <p><strong>Year:</strong> {reportData.year}</p>
-                    <p><strong>Total Revenue:</strong> ₹{reportData.totalRevenue}</p>
-                    <p><strong>Total Expenses:</strong> ₹{reportData.totalExpenses}</p>
-                    <p><strong>Profit:</strong> ₹{reportData.profit}</p>
+                <div className="p-6 border border-gray-300 rounded-lg bg-gray-50 shadow-md">
+                    <p className="text-lg"><strong>Month:</strong> {reportData.month}</p>
+                    <p className="text-lg"><strong>Year:</strong> {reportData.year}</p>
+                    <p className="text-lg"><strong>Total Revenue:</strong> ₹{reportData.totalRevenue}</p>
+                    <p className="text-lg"><strong>Total Expenses:</strong> ₹{reportData.totalExpenses}</p>
+                    <p className="text-lg font-semibold"><strong>Profit:</strong> ₹{reportData.profit}</p>
                 </div>
             )}
         </div>
     );
+    
 };
 
 export default Report;
