@@ -38,56 +38,46 @@ function Login() {
     }
 
     return (
-        <div className="text-white text-[18px] bg-gray-300 flex justify-center items-center h-screen w-screen">
-            <div className="flex w-[60%] h-[60%]">
-                <form
-                    method="get"
-                    onSubmit={logIn}
-                    className="flex flex-col items-center justify-around h-full  bg-black px-16 py-10"
-                >
-                    <h1 className="text-5xl mb-6">Log In</h1>
-                    <label className="mb-6 relative flex items-center">
-                        <input
-                            type="text"
-                            className="peer form-input"
-                            name="email"
-                            onChange={handleChange}
-                            value={loginData.email}
-                            required
-                        />
-                        <span className="form-input-label ">Email</span>
-                    </label>
-                    <label className="mb-6  relative flex items-center">
-                        <input
-                            type="password"
-                            className="peer form-input"
-                            name="password"
-                            onChange={handleChange}
-                            value={loginData.password}
-                            required
-                        />
-                        <span className="form-input-label">Password</span>
-                    </label>
-                    <button className="form-button">Login</button>
-                    <div className="mt-6">
-                        Don&#39;t have an account yet?{" "}
-                        <Link
-                            to="/register"
-                            className="underline-effect text-moneygreen"
-                        >
-                            Register Here
-                        </Link>
-                    </div>
-                </form>
-                <div className="bg-black w-full flex flex-col py-[100px] px-[60px]">
-                    <h1 className="text-5xl text-moneygreen my-10">
-                        Welcome Back!
-                    </h1>
-                    <p className="text-2xl ">
-                        Ready to conquer the day? Let&apos;s go!
-                    </p>
+        <div className="bg-grid text-white text-[18px] bg-gray-100 flex justify-center items-center h-screen w-screen">
+            <form
+                method="get"
+                onSubmit={logIn}
+                className="bg-[radial-gradient(ellipse_at_top,_#1f2937,_#111827)] shadow-2xl rounded-xl px-16 py-4 flex flex-col items-center justify-around h-[500px]"
+            >
+                <h1 className="text-5xl mb-6 text-moneygreen font-medium">
+                    Log In
+                </h1>
+                <div className="flex flex-col gap-11">
+                    <input
+                        type="text"
+                        className="form-input"
+                        name="email"
+                        onChange={handleChange}
+                        value={loginData.email}
+                        required
+                        placeholder="Email"
+                    />
+                    <input
+                        type="password"
+                        className="form-input"
+                        name="password"
+                        onChange={handleChange}
+                        value={loginData.password}
+                        required
+                        placeholder="Password"
+                    />
                 </div>
-            </div>
+                <button className="form-button">Login</button>
+                <div className="mt-3">
+                    Don&#39;t have an account yet?{" "}
+                    <Link
+                        to="/register"
+                        className="underline-effect text-moneygreen"
+                    >
+                        Register Here
+                    </Link>
+                </div>
+            </form>
         </div>
     );
 }

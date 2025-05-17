@@ -41,48 +41,37 @@ function Register() {
     }
 
     return (
-        <div className="text-white text-[18px] bg-gray-300 flex justify-center items-center h-screen w-screen">
-            <div className="flex w-[60%] h-[60%]">
-                <form
-                    method="get"
-                    onSubmit={RegisterUser}
-                    className="flex flex-col items-center justify-around h-full bg-black px-16 py-10"
-                >
-                    <h1 className="text-5xl mb-6">Register</h1>
-                    {Object.keys(loginData).map((key, index) => (
-                        <label
-                            key={index}
-                            className="mb-6 relative flex items-center"
-                        >
-                            <input
-                                type={
-                                    key === "password" || key === "password2"
-                                        ? "password"
-                                        : "text"
-                                }
-                                className="peer form-input"
-                                name={key}
-                                onChange={handleChange}
-                                value={loginData[key]}
-                                required
-                            />
-                            <span className="form-input-label">
-                                {key === "password2"
-                                    ? "Confirm Password"
-                                    : key.charAt(0).toUpperCase() +
-                                      key.slice(1)}
-                            </span>
-                        </label>
+        <div className="bg-grid text-white text-[18px] bg-gray-100 flex justify-center items-center h-screen w-screen">
+            <form
+                method="get"
+                onSubmit={RegisterUser}
+                className="bg-[radial-gradient(ellipse_at_top,_#1f2937,_#111827)] shadow-2xl rounded-xl px-16 py-4 flex flex-col items-center justify-around h-[500px]"
+            >
+                <h1 className="text-5xl  text-moneygreen font-medium">
+                    Register
+                </h1>
+                <div className="flex flex-col gap-11">
+                    {Object.keys(loginData).map((key) => (
+                        <input
+                            key={key}
+                            type={
+                                key === "password" || key === "password2"
+                                    ? "password"
+                                    : "text"
+                            }
+                            className="peer form-input"
+                            name={key}
+                            onChange={handleChange}
+                            value={loginData[key]}
+                            required
+                            placeholder={
+                                key === "password2" ? "Re-enter Password" : key
+                            }
+                        />
                     ))}
-                    <button className="form-button">Register</button>
-                </form>
-                <div className="bg-black w-full flex flex-col py-[100px] px-[60px]">
-                    <h1 className="text-5xl text-moneygreen my-10">Join Us!</h1>
-                    <p className="text-2xl">
-                        Focus on what matters — we’ll handle the heavy lifting.
-                    </p>
                 </div>
-            </div>
+                <button className="form-button">Register</button>
+            </form>
         </div>
     );
 }
