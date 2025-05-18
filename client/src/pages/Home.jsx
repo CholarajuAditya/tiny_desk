@@ -81,7 +81,7 @@ const Home = () => {
     return (
         <div className="min-h-screen flex w-full">
             <Sidebar logout={logout} />
-            <div className="min-h-screen w-full py-20 md:pl-60 bg-[#f5f4de]">
+            <div className="min-h-screen w-full py-20 md:pl-60 bg-gray-100">
                 <Outlet className="h-full w-full" />
             </div>
         </div>

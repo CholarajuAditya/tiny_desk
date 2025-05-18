@@ -17,7 +17,7 @@
     }
 
     body {
-        @apply text-black
+        @apply text-black bg-white
     }
 
     input[type="text"] {
@@ -38,12 +38,8 @@
         @apply w-[333px] h-10 border-[1px] border-gray-400 rounded-md px-3 py-0.5 focus:outline-none focus:border-moneygreen ease-out duration-150
     }
 
-    .form-input-label {
-        @apply text-xl absolute text-gray-400 bg-black left-3 transition-all ease-out duration-200 peer-focus:text-moneygreen peer-focus:-translate-y-5 peer-focus:text-[17px] peer-valid:text-[17px] peer-valid:-translate-y-5
-    }
-
     .form-button {
-        @apply cursor-pointer bg-gray-200 text-black px-3 py-2 w-[333px] rounded-2xl hover:bg-moneygreen hover:border-none hover:text-white duration-200 ease-out active:text-black active:bg-white
+        @apply cursor-pointer bg-gray-200 text-black px-3 py-2 w-[333px] rounded-2xl hover:bg-moneygreen hover:border-moneygreen hover:text-white duration-500 ease-in-out active:text-black active:bg-white
     }
 
     .underline-effect {
@@ -58,6 +54,24 @@
     .underline-effect:hover::before {
         @apply w-[100%]
     }
+
+    .bg-grid {
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 1px, transparent 1px);
+        background-size: 45px 45px;
+    }
+
+    .link-hover-effect {
+        @apply hover:text-moneygreen duration-300 delay-50
+    }
+
+    .box {
+        @apply bg-black rounded-xl h-[270px] text-white flex flex-col items-center p-5;
+    }
+
+    .features-header {
+        @apply flex items-center gap-3 mb-10 text-2xl text-moneygreen font-bold
+    }
 }
 
 @layer components {
@@ -68,11 +82,4 @@
     .btn {
         @apply bg-black text-white rounded-md text-[18px] hover:bg-white hover:text-black duration-400 opacity-70 hover:opacity-100
     }
-}
-
-
-
-input[type='password'] {
-    font-family: Verdana;
-    letter-spacing: 0.125em;
 }
