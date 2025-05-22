@@ -67,7 +67,16 @@ app.use(errorHandler);
 //DB connect
 import { connectDB } from "./db/connectDB.js";
 const port = process.env.PORT || 5000;
-app.listen(port, "0.0.0.0", async () => {
-    await connectDB(process.env.MONGO_URI);
-    console.log(`server listening on ${port}`);
-});
+async function startServer() {
+    try {
+        await connectDB(process.env.MONGO_URI);
+        app.listen(port, "0.0.0.0", () => {
+            console.log(`Server listening on port ${port}`);
+        });
+    } catch (error) {
+        console.error("Failed to connect to DB:", error);
+        process.exit(1);
+    }
+}
+
+startServer();
