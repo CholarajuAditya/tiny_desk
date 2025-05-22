@@ -1,3 +1,5 @@
+import React from "react";
+
 const DocumentList = ({ list, type }) => {
     return (
         <>

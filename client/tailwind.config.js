@@ -1,1 +1,7 @@
-//this file is required for tailwind intellisense to work
+export default {
+    content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
