@@ -21,6 +21,9 @@ app.use(
     })
 );
 
+app.get("/", (req, res) => {
+    res.send("hello");
+});
 //routes
 import {
     reportRouter,
@@ -32,10 +35,11 @@ import {
     invoiceRouter,
     poRouter,
 } from "./routes/index.js";
-import { auth } from "./utils/index.js";
 
-app.use("/login", loginRouter);
-app.use("/register", registerRouter);
+app.use("/api/register", registerRouter);
+app.use("/api/login", loginRouter);
+
+import { auth } from "./utils/index.js";
 
 app.use(auth);
 // import Customer from "./models/customer.model.js"
@@ -54,12 +58,12 @@ app.use(auth);
 // }
 // createUsers()
 
-app.use("/profile", profileRouter);
-app.use("/customer", customerRouter);
-app.use("/vendor", vendorRouter);
-app.use("/invoice", invoiceRouter);
-app.use("/po", poRouter);
-app.use("/report", reportRouter);
+app.use("/api/profile", profileRouter);
+app.use("/api/customer", customerRouter);
+app.use("/api/vendor", vendorRouter);
+app.use("/api/invoice", invoiceRouter);
+app.use("/api/po", poRouter);
+app.use("/api/report", reportRouter);
 //error handling
 import { errorHandler } from "./utils/index.js";
 app.use(errorHandler);
