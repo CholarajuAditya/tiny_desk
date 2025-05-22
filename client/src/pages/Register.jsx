@@ -55,16 +55,21 @@ function Register() {
     }
 
     return (
-        <div className="bg-grid text-white text-[18px] bg-gray-100 flex justify-center items-center h-screen w-screen">
+        <div className="bg-grid text-white text-[18px] bg-gray-100 flex justify-center items-center min-h-screen w-screen p-4 sm:p-6 md:p-8">
             <form
                 method="get"
                 onSubmit={RegisterUser}
-                className="bg-[radial-gradient(ellipse_at_top,_#1f2937,_#111827)] shadow-2xl rounded-xl px-16 py-4 flex flex-col items-center justify-around h-[500px]"
+                className="bg-[radial-gradient(ellipse_at_top,_#1f2937,_#111827)] shadow-2xl rounded-xl 
+                           px-6 pt-4 pb-6 sm:px-8 sm:pt-6 sm:pb-8 md:px-12 md:pt-8 md:pb-10
+                           flex flex-col items-center justify-around 
+                           w-full max-w-[320px] sm:max-w-[350px] md:max-w-[420px]
+                           min-h-[390px] max-h-[520px] sm:max-h-[550px] md:max-h-[580px] lg:h-[470px]"
             >
-                <h1 className="text-5xl  text-moneygreen font-medium">
+                <h1 className="sm:mb-6 md:mb-10 text-3xl sm:text-4xl md:text-5xl  text-moneygreen font-medium text-center">
                     Register
                 </h1>
-                <div className="flex flex-col gap-11">
+
+                <div className="sm:mb-6 md:mb-10 flex flex-col gap-6 sm:gap-8 md:gap-9 w-full">
                     {Object.keys(loginData).map((key) => (
                         <input
                             key={key}
@@ -84,6 +89,7 @@ function Register() {
                         />
                     ))}
                 </div>
+
                 <button className="form-button">Register</button>
             </form>
         </div>

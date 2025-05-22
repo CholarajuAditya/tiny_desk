@@ -39,24 +39,11 @@
 
 @layer utilities {
     .form-input {
-        @apply w-[333px] h-10 border-[1px] border-gray-400 rounded-md px-3 py-0.5 focus:outline-none focus:border-moneygreen ease-out duration-150
+        @apply w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[333px] h-10 sm:h-11 md:h-12 lg:h-10 border-[1px] border-gray-400 rounded-md px-3 py-0.5 text-sm sm:text-base focus:outline-none focus:border-moneygreen ease-out duration-150;
     }
 
     .form-button {
-        @apply cursor-pointer bg-gray-200 text-black px-3 py-2 w-[333px] rounded-2xl hover:bg-moneygreen hover:border-moneygreen hover:text-white duration-500 ease-in-out active:text-black active:bg-white
-    }
-
-    .underline-effect {
-        @apply relative
-    }
-
-    .underline-effect::before {
-        content: "";
-        @apply bg-moneygreen absolute bottom-[-6px] left-0 w-[0] h-0.5 duration-500 ease-out
-    }
-
-    .underline-effect:hover::before {
-        @apply w-[100%]
+        @apply cursor-pointer bg-gray-200 text-black px-3 py-2 sm:py-2.5 md:py-3 lg:py-2 w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[333px] rounded-2xl text-sm sm:text-base lg:text-base hover:bg-moneygreen hover:border-moneygreen hover:text-white duration-500 ease-in-out active:text-black active:bg-white;
     }
 
     .bg-grid {
