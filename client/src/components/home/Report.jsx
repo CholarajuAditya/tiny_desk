@@ -29,9 +29,10 @@ const Report = () => {
     const fetchReport = async () => {
         setLoading(true);
         try {
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                `/api/report?month=${month}&year=${year}`,
+                `${API_BASE_URL}/api/report?month=${month}&year=${year}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }

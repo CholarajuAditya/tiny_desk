@@ -153,11 +153,16 @@ function Invoice() {
     const downloadInvoice = async (e) => {
         e.preventDefault();
         try {
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
-            const response = await axios.post("/api/invoice", invoiceData, {
-                responseType: "blob",
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.post(
+                `${API_BASE_URL}/api/invoice`,
+                invoiceData,
+                {
+                    responseType: "blob",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
             });

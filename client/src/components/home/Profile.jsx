@@ -21,8 +21,9 @@ const Profile = () => {
     const getProfile = async () => {
         setLoading(true);
         try {
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
-            const response = await axios.get("/api/profile", {
+            const response = await axios.get(`${API_BASE_URL}/api/profile`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -74,14 +75,19 @@ const Profile = () => {
     const createProfile = async (e) => {
         e.preventDefault();
         try {
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
             profileData.gstin = profileData.gstin.toUpperCase();
             const data = { ...profileData, address: addressData };
-            const response = await axios.post("/api/profile", data, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await axios.post(
+                `${API_BASE_URL}/api/profile`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
             if (response.status == 200) {
                 setProfileCreated(true);

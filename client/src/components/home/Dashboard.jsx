@@ -9,8 +9,9 @@ const Dashboard = () => {
 
     const getMonthlyReport = async () => {
         try {
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
-            const response = await axios.get("/api/report", {
+            const response = await axios.get(`${API_BASE_URL}/api/report`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

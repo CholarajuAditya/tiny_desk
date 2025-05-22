@@ -4,9 +4,19 @@ const app = express();
 import cors from "cors";
 
 app.use(express.json());
+const allowedOrigins = [
+    "https://tiny-desk.vercel.app",
+    "http://localhost:5000",
+];
 app.use(
     cors({
-        origin: "https://tiny-desk.vercel.app/",
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         credentials: true,
     })
 );

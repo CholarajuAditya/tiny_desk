@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -19,12 +18,22 @@ function Login() {
     }
 
     async function logIn(e) {
+        e.preventDefault();
+
         try {
-            e.preventDefault();
-            const response = await axios.post("/api/login", loginData, {
-                responseType: "json",
-            });
+            // Use global backend URL here
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
+
+            const response = await axios.post(
+                `${API_BASE_URL}/api/login`,
+                loginData,
+                {
+                    responseType: "json",
+                }
+            );
+
             localStorage.setItem("token", response.data.token);
+
             if (response.status === 200) {
                 window.alert(response.data.message);
                 navigate("/user");

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -21,23 +20,37 @@ function Register() {
     }
 
     async function RegisterUser(e) {
+        e.preventDefault();
+
         try {
-            e.preventDefault();
             const { password, password2 } = loginData;
 
-            if (password !== password2)
-                throw new Error("password does'nt match");
+            if (password !== password2) {
+                throw new Error("Passwords don't match");
+            }
 
-            const response = await axios.post("/api/register", loginData, {
-                responseType: "json",
-            });
+            // Use the global backend URL here
+            const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
+
+            const response = await axios.post(
+                `${API_BASE_URL}/api/register`,
+                loginData,
+                {
+                    responseType: "json",
+                }
+            );
 
             if (response.status === 200) {
                 window.alert("Registration successful");
                 navigate("/login");
             }
         } catch (error) {
-            window.alert(error.message);
+            // Show either error from response or generic message
+            window.alert(
+                error.response?.data?.message ||
+                    error.message ||
+                    "Registration failed"
+            );
         }
     }
 

@@ -11,6 +11,8 @@ import {
     PurchaseOrder,
 } from "./components/home/index.js";
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
+
 function App() {
     return (
         <Router>
@@ -27,7 +29,7 @@ function App() {
                         path="customer"
                         element={
                             <ContactList
-                                url="/api/customer"
+                                url={`${API_BASE_URL}/api/customer`}
                                 entityName="customer"
                             />
                         }
@@ -36,7 +38,7 @@ function App() {
                         path="vendor"
                         element={
                             <ContactList
-                                url="/api/vendor"
+                                url={`${API_BASE_URL}/api/vendor`}
                                 entityName="vendor"
                             />
                         }
@@ -45,7 +47,7 @@ function App() {
                         path="customer/:id"
                         element={
                             <ContactProfile
-                                url="/api/customer"
+                                url={`${API_BASE_URL}/api/customer`}
                                 entityName="customer"
                                 btnAction="invoice"
                             />
@@ -55,7 +57,7 @@ function App() {
                         path="vendor/:id"
                         element={
                             <ContactProfile
-                                url="/api/vendor"
+                                url={`${API_BASE_URL}/api/vendor`}
                                 entityName="vendor"
                                 btnAction="po"
                             />
