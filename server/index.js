@@ -21,9 +21,6 @@ app.use(
     })
 );
 
-app.get("/", (req, res) => {
-    res.send("hello");
-});
 //routes
 import {
     reportRouter,
@@ -38,6 +35,21 @@ import {
 
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
+
+//preflight cors issue
+app.options(
+    "*",
+    cors({
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
+    })
+);
 
 import { auth } from "./utils/index.js";
 
