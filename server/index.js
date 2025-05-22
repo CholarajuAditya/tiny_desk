@@ -6,7 +6,7 @@ import cors from "cors";
 app.use(express.json());
 const allowedOrigins = [
     "https://tiny-desk.vercel.app",
-    "http://localhost:5000",
+    "http://localhost:5173",
 ];
 app.use(
     cors({
