@@ -6,7 +6,7 @@ import cors from "cors";
 app.use(express.json());
 app.use(
     cors({
-        origin: "https://your-frontend.vercel.app",
+        origin: "https://tiny-desk.vercel.app/",
         credentials: true,
     })
 );
