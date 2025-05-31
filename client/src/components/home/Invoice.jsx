@@ -5,6 +5,7 @@ import axios from "axios";
 import { saveAs } from "file-saver";
 
 function Invoice() {
+    const [loading, setLoading] = useState(false);
     const location = useLocation();
     const customer = location.state?.contact;
 
@@ -15,6 +16,7 @@ function Invoice() {
             city: "",
             pincode: "",
             phone: "",
+            email: "",
         },
         deliveryTo: {
             address: "",
@@ -33,6 +35,7 @@ function Invoice() {
                     city: customer.address?.city || "",
                     pincode: customer.address?.pincode || "",
                     phone: customer.phone || "",
+                    email: customer.email || "",
                 },
             }));
         } else {
@@ -152,6 +155,7 @@ function Invoice() {
 
     const downloadInvoice = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
@@ -167,8 +171,18 @@ function Invoice() {
                 type: "application/pdf",
             });
             saveAs(pdfBlob, "invoice.pdf");
+
+            const messageId = response.headers["messageid"];
+
+            if (messageId) {
+                window.alert("Invoice mail sent!");
+            } else {
+                window.alert("error sending Invoice mail");
+            }
         } catch (err) {
             window.alert(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -330,7 +344,7 @@ function Invoice() {
                 className="cursor-pointer bg-black text-white px-6 py-2 mt-6 rounded-lg hover:bg-gray-800 w-full"
                 type="submit"
             >
-                Generate Invoice
+                {loading ? "Generating Invoice..." : " Generate Invoice"}
             </button>
         </form>
     );

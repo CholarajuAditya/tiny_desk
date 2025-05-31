@@ -7,7 +7,7 @@ import { saveAs } from "file-saver";
 function PurchaseOrder() {
     const location = useLocation();
     const vendor = location.state?.contact;
-
+    const [loading, setLoading] = useState(false);
     const [poData, setPoData] = useState({
         vendor: {
             name: "",
@@ -15,6 +15,7 @@ function PurchaseOrder() {
             city: "",
             pincode: "",
             phone: "",
+            email: "",
         },
         deliveryTo: {
             address: "",
@@ -33,6 +34,7 @@ function PurchaseOrder() {
                     city: vendor.address?.city || "",
                     pincode: vendor.address?.pincode || "",
                     phone: vendor.phone || "",
+                    email: vendor.email || "",
                 },
             }));
         } else {
@@ -124,6 +126,7 @@ function PurchaseOrder() {
 
     const downloadPO = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
             const token = localStorage.getItem("token");
@@ -139,8 +142,18 @@ function PurchaseOrder() {
                 type: "application/pdf",
             });
             saveAs(pdfBlob, "PO.pdf");
+
+            const messageId = response.headers["messageid"];
+
+            if (messageId) {
+                window.alert("PO mail sent!");
+            } else {
+                window.alert("error sending PO mail");
+            }
         } catch (err) {
             window.alert(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -269,7 +282,7 @@ function PurchaseOrder() {
                 className="cursor-pointer bg-black text-white px-6 py-2 mt-6 rounded-lg hover:bg-gray-800 w-full"
                 type="submit"
             >
-                Generate PO
+                {loading ? "Generating pdf..." : "Generate PO"}
             </button>
         </form>
     );

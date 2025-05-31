@@ -18,6 +18,7 @@ app.use(
             }
         },
         credentials: true,
+        exposedHeaders: ["messageid"],
     })
 );
 
