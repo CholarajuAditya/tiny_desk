@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "./Loading.jsx";
 import { NavLink } from "react-router-dom";
 import { BiAddToQueue, BiX } from "react-icons/bi";
+import { Regex } from "../../Regex.js";
 
 const ContactList = ({ url, entityName }) => {
     const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ const ContactList = ({ url, entityName }) => {
                 window.alert(
                     error.response?.data?.message || "Error fetching data"
                 );
+                setLoading(false);
             } finally {
                 setLoading(false);
             }
@@ -58,6 +60,22 @@ const ContactList = ({ url, entityName }) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
+            //validation of data
+            let validation_feilds = {
+                GSTIN: newContactData.gstin,
+                phone: newContactData.phone,
+                email: newContactData.email,
+                pincode: newContactAddress.pincode,
+            };
+
+            Object.entries(validation_feilds).forEach(([key, val]) => {
+                if (!Regex[key].test(val)) {
+                    window.alert(`please enter a valid ${key}`);
+                    throw Error("");
+                }
+            });
+
             if (response.status === 200) {
                 setContactList((prev) => [...prev, response.data]);
                 window.alert(`${entityName} created successfully`);
@@ -94,6 +112,7 @@ const ContactList = ({ url, entityName }) => {
                 <div className="flex flex-col items-center max-w-6xl mx-auto p-6">
                     <div className="flex align-center min-w-[300px] w-[50%] items-center justify-between">
                         <input
+                            autoComplete="off"
                             type="text"
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder={`Search ${entityName}s...`}
@@ -129,6 +148,7 @@ const ContactList = ({ url, entityName }) => {
                                 >
                                     {field}:
                                     <input
+                                        autoComplete="off"
                                         required
                                         type="text"
                                         name={field}
@@ -147,6 +167,7 @@ const ContactList = ({ url, entityName }) => {
                                     >
                                         {field}:
                                         <input
+                                            autoComplete="off"
                                             required
                                             type="text"
                                             name={field}

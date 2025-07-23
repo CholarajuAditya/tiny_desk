@@ -4,7 +4,6 @@ import { Landing, Login, Register, NotFound, Home } from "./pages/";
 import {
     Report,
     Dashboard,
-    Profile,
     ContactList,
     ContactProfile,
     Invoice,
@@ -24,7 +23,6 @@ function App() {
                 <Route path="/user" element={<Home />}>
                     <Route index element={<Dashboard />} />
                     <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="profile" element={<Profile />} />
                     <Route
                         path="customer"
                         element={

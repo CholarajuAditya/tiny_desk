@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DocumentList from "./DocumentList.jsx";
+import { Regex } from "../../Regex.js";
 
 const ContactProfile = ({ url, entityName, btnAction }) => {
     const { id } = useParams();
@@ -55,6 +56,7 @@ const ContactProfile = ({ url, entityName, btnAction }) => {
                     `Error fetching ${entityName}:`,
                     error.response?.data?.message || error.message
                 );
+                setLoading(false);
             } finally {
                 setLoading(false);
             }
@@ -82,6 +84,20 @@ const ContactProfile = ({ url, entityName, btnAction }) => {
     const upDateContact = async (e) => {
         e.preventDefault();
         try {
+            let validation_feilds = {
+                GSTIN: newDetails.gstin,
+                phone: newDetails.phone,
+                email: newDetails.email,
+                pincode: newAddress.pincode,
+            };
+
+            Object.entries(validation_feilds).forEach(([key, val]) => {
+                if (!Regex[key].test(val)) {
+                    window.alert(`please enter a valid ${key}`);
+                    throw Error("");
+                }
+            });
+
             const token = localStorage.getItem("token");
             const data = { ...newDetails, address: { ...newAddress } };
             const response = await axios.patch(`${url}/${id}`, data, {
@@ -209,6 +225,7 @@ const ContactProfile = ({ url, entityName, btnAction }) => {
                                             {key}:
                                         </span>
                                         <input
+                                            autoComplete="off"
                                             type="text"
                                             name={key}
                                             value={newDetails[key]}
@@ -229,6 +246,7 @@ const ContactProfile = ({ url, entityName, btnAction }) => {
                                             {key}:
                                         </span>
                                         <input
+                                            autoComplete="off"
                                             type="text"
                                             name={key}
                                             value={newAddress[key]}

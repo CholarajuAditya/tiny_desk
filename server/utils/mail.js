@@ -32,7 +32,7 @@ const sendMail = async (to, subject, html, attachment) => {
         });
         return info;
     } catch (error) {
-        throw error;
+        next(error);
     }
 };
 
