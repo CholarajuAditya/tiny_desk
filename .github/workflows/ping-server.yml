@@ -1,0 +1,15 @@
+name: Ping Backend Periodically
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the backend server
+        run: |
+          curl --silent --fail "$RENDER_BACKEND_URL" || echo "Ping failed"
+        env:
+          RENDER_BACKEND_URL: ${{ secrets.RENDER_BACKEND_URL }}
