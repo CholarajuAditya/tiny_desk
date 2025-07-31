@@ -34,6 +34,11 @@ import {
     poRouter,
 } from "./routes/index.js";
 
+//for git hub actions - to keep server alive
+app.get("/ping", (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
 
