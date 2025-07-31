@@ -3,6 +3,7 @@ name: Ping Backend Periodically
 on:
   schedule:
     - cron: '*/15 * * * *'  # Every 15 minutes
+  workflow_dispatch:        # Allows manual triggering via GitHub UI
 
 jobs:
   ping:
